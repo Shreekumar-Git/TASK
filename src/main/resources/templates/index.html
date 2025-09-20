@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMPLOYEE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    button:nth-child(2) {
+      background-color: #28a745;
+    }
+
+    button:nth-child(2):hover {
+      background-color: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Employee Form</h1>
+
+    <label>EMP ID:</label>
+    <input type="text" id="empId" placeholder="employeeId">
+
+    <label>EMPLOYEE NAME:</label>
+    <input type="text" id="empName" placeholder="employeeName">
+
+    <label>EMAIL:</label>
+    <input type="text" id="empEmail" placeholder="empEmail">
+
+    <label>LOCATION:</label>
+    <input type="text" id="empLocation" placeholder="empLocation">
+
+    <div class="btn-group">
+      <button onclick="addEmployee()">Add</button>
+      <button onclick="updateEmployee()">Update</button>
+    </div>
+  </div>
+
+  <script>
+    // Get values from input fields
+    function getEmployeeData() {
+      return {
+        empId: parseInt(document.getElementById('empId').value),
+        empName: document.getElementById('empName').value,
+        empEmail: document.getElementById('empEmail').value,
+        empLocation: document.getElementById('empLocation').value
+      };
+    }
+
+    // POST - Add Employee
+    function addEmployee() {
+      const data = getEmployeeData();
+      fetch('http://localhost:9000/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        alert('Employee added successfully');
+        console.log(response);
+      })
+      .catch(err => console.error(err));
+    }
+    // PUT - Update Employee
+    function updateEmployee() {
+      const data = getEmployeeData();
+      fetch('http://localhost:9000/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        alert('Employee updated successfully');
+        console.log(response);
+      })
+      .catch(err => console.error(err));
+    }
+  </script>
+
+</body>
+</html>
